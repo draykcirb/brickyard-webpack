@@ -54,7 +54,8 @@
   "scripts": {
     "lint": "eslint *.js",
     "test": "echo 'no test!\n'",
-    "release": "standard-version"
+    "release": "standard-version",
+    "push": "git push --follow-tags && npm publish . --registry=https://registry.npmjs.org/"
   },
   "config": {
     "validate-commit-msg": {
