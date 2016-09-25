@@ -8,7 +8,7 @@ function generate(config) {
     const commonConfig = {
         context: path.resolve(process.cwd(), config.pluginStore),
         output: {
-            path: path.join(config.outputBase, config.destPostfix)
+            path: config.outputAssetsPath
         },
         module: {
             loaders: [
