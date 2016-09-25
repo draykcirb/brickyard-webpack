@@ -52,7 +52,7 @@
     "brickyard3": "^2.0.0"
   },
   "scripts": {
-    "lint": "eslint src/**/*",
+    "lint": "eslint *.js",
     "test": "echo 'no test!\n'",
     "release": "standard-version"
   },
