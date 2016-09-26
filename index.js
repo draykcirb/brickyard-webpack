@@ -5,7 +5,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const butil = require('brickyard3/lib/util')
 const glob = require('glob')
-const webpackMerge = require('webpack-merge')
+const webpackMerge = require('./lib/webpackMerge')
 
 const commonPreset = require('./preset/common')
 

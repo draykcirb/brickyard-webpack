@@ -38,8 +38,7 @@
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.0",
     "stylelint": "^7.3.0",
-    "webpack": "^1.13.2",
-    "webpack-merge": "^0.14.1"
+    "webpack": "^1.13.2"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^7.0.0",
