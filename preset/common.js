@@ -49,7 +49,7 @@ function generate(config) {
             root: [path.resolve(process.cwd(), 'node_modules'), path.join(config.outputBase, 'bower_components')]
         },
         postcss() {
-            return [
+            const pluginList = [
                 autoPrefixer({
                     browsers: [
                         'last 2 versions',
@@ -58,10 +58,17 @@ function generate(config) {
                     ],
                     add: true
                 }),
-                require('stylelint')({ /* your options */ }),
-                require('postcss-reporter')({ clearMessages: true }),
                 require('postcss-normalize-charset')
             ]
+
+            if (config.lint) {
+                pluginList.push(
+                  require('stylelint')({ /* your options */ }),
+                  require('postcss-reporter')({ clearMessages: true })
+                )
+            }
+
+            return pluginList
         }
     }
 
