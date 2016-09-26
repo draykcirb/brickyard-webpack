@@ -25,7 +25,11 @@ function generate(config) {
                     test: /\.js$/,
                     exclude: /(node_modules|bower_components)/,
                     loader: `babel?cacheDirectory=${path.resolve('.babel-cache/')}`
-                }
+                },
+                {
+                    test: /\.html$/,
+                    loader: 'html?attrs=link:href img:src use:xlink:href'
+                },
             ]
         },
         plugins: [
