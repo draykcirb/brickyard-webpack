@@ -35,12 +35,16 @@ module.exports = {
             this.configs.push(factory(runtime.config, commonWebpackConfig))
         })
 
-        this.configs.push(...this.retrievePluginConfig(runtime, commonWebpackConfig))
+        let targetWebpackConfig = webpackMerge.smart(...this.configs)
+
+        this.configs.length = 0
+
+        this.configs.push(...this.retrievePluginConfig(runtime, targetWebpackConfig))
+
+        targetWebpackConfig = webpackMerge.smart(targetWebpackConfig, ...this.configs)
 
         // more decoration
         const pluginAliases = aliasPlugins(runtime.plugins)
-
-        const targetWebpackConfig = webpackMerge.smart(...this.configs)
 
         targetWebpackConfig.plugins.push(
           defineGlobalVars(runtime.config, targetWebpackConfig.debug),
