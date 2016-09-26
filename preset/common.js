@@ -46,7 +46,11 @@ function generate(config) {
         ],
         resolve: {
             extensions: ['', '.webpack.js', '.web.js', '.js'],
-            root: [path.resolve(process.cwd(), 'node_modules'), path.join(config.outputBase, 'bower_components')]
+            root: [
+                path.resolve(process.cwd(), 'node_modules'),
+                path.join(config.outputBase, 'bower_components'),
+                path.resolve(process.cwd(), config.pluginStore)
+            ]
         },
         postcss() {
             const pluginList = [

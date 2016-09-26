@@ -43,15 +43,10 @@ module.exports = {
 
         targetWebpackConfig = webpackMerge.smart(targetWebpackConfig, ...this.configs)
 
-        // more decoration
-        const pluginAliases = aliasPlugins(runtime.plugins)
-
         targetWebpackConfig.plugins.push(
           defineGlobalVars(runtime.config, targetWebpackConfig.debug),
           ...createEntries(runtime.plugins)
         )
-
-        _.mergeWith(targetWebpackConfig, { resolve: { alias: pluginAliases } }, mergeOperator)
 
         moveETP2End(targetWebpackConfig)
 
@@ -86,18 +81,6 @@ function moveETP2End(config) {
 }
 
 // ==========================================================
-
-/**
- * an operator to merge array
- *
- * @param objValue
- * @param srcValue
- */
-function mergeOperator(objValue, srcValue) {
-    if (Array.isArray(objValue)) {
-        return objValue.concat(srcValue)
-    }
-}
 
 /**
  * create html entries based on each plugin's declaration
@@ -135,18 +118,6 @@ function createEntry(_path) {
         template: _path,
         chunksSortMode: 'dependency'
     })
-}
-
-/**
- * create shimming for plugins, then webpack can resolve the plugin correctly
- * @param plugins
- * @returns {*}
- */
-function aliasPlugins(plugins) {
-    return _.reduce(plugins, function (result, plugin) {
-        result[plugin.name] = plugin.path
-        return result
-    }, {})
 }
 
 /**
