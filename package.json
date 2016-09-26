@@ -54,6 +54,7 @@
   "scripts": {
     "lint": "eslint *.js",
     "test": "echo 'no test!\n'",
+    "prerelease": "npm run lint",
     "release": "standard-version",
     "push": "git push --follow-tags && npm publish . --registry=https://registry.npmjs.org/"
   },
