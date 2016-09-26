@@ -54,7 +54,7 @@
   },
   "scripts": {
     "lint": "eslint **/*.js",
-    "test": "echo 'no test!\n'",
+    "test": "mocha",
     "prerelease": "npm run lint",
     "release": "standard-version",
     "push": "git push --follow-tags && npm publish . --registry=https://registry.npmjs.org/"
@@ -82,7 +82,7 @@
     "ghooks": {
       "pre-commit": "npm run lint",
       "commit-msg": "validate-commit-msg",
-      "post-commit": "git log -1 HEAD",
+      "post-commit": "git --no-pager log -1 HEAD",
       "post-checkout": "npm install",
       "post-merge": "npm install"
     }
