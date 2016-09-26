@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/draykcirb/brickyard-webpack/compare/v1.1.0...v1.2.0) (2016-09-26)
+
+
+### Bug Fixes
+
+* stylelint config again ([7c2749f](https://github.com/draykcirb/brickyard-webpack/commit/7c2749f))
+
+
+### Features
+
+* make webpack-merge as private lib for customization ([749e7ca](https://github.com/draykcirb/brickyard-webpack/commit/749e7ca))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/draykcirb/brickyard-webpack/compare/v1.0.0...v1.1.0) (2016-09-26)
 
