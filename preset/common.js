@@ -54,6 +54,8 @@ function generate(config) {
                     ],
                     add: true
                 }),
+                require('stylelint')({ /* your options */ }),
+                require('postcss-reporter')({ clearMessages: true }),
                 require('postcss-normalize-charset')
             ]
         }
