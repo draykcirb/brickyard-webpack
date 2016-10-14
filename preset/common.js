@@ -74,11 +74,6 @@ function generate(config) {
 
     if (config.lint) {
         commonConfig.module.preLoaders = [
-            // style lint
-            {
-                test: /\.(scss|css)$/,
-                loader: 'stylelint'
-            },
             // eslint
             {
                 test: /\.js$/,
