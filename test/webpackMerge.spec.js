@@ -1,12 +1,12 @@
 /* eslint import/no-extraneous-dependencies:0 */
 const expect = require('chai').expect
-const merge = require('../lib/webpackMerge')
+const merge = require('webpack-merge')
 
 describe('merge test', function () {
     it('should merge with corect order', function () {
         const config1 = {
             module: {
-                loaders: [{
+                rules: [{
                     test: /\.html$/,
                     loader: 'html?attrs=link:href img:src use:xlink:href'
                 }]
@@ -15,7 +15,7 @@ describe('merge test', function () {
 
         const config2 = {
             module: {
-                loaders: [{
+                rules: [{
                     test: /\.html$/,
                     exclude: /index\.html/,
                     loaders: ['ngtemplate', 'html?attrs=link:href img:src source:src']
@@ -25,7 +25,7 @@ describe('merge test', function () {
 
         expect(merge.smart(config1, config2)).to.eql({
             module: {
-                loaders: [{
+                rules: [{
                     test: /\.html$/,
                     loader: 'html?attrs=link:href img:src use:xlink:href'
                 }, {
@@ -40,7 +40,7 @@ describe('merge test', function () {
     it('should merge with corect order', function () {
         const config1 = {
             module: {
-                loaders: [// babel transpile js
+                rules: [// babel transpile js
                     {
                         test: /\.js$/,
                         exclude: /(node_modules|bower_components)/,
@@ -52,7 +52,7 @@ describe('merge test', function () {
 
         const config2 = {
             module: {
-                loaders: [
+                rules: [
                     {
                         test: /\.js$/,
                         exclude: /(node_modules|bower_components)/,
@@ -62,9 +62,13 @@ describe('merge test', function () {
             }
         }
 
-        expect(merge.smart(config1, config2)).to.eql({
+        const result = merge.smartStrategy({
+            'module.rules.loaders': 'prepend'
+        })(config1, config2)
+
+        expect(result).to.eql({
             module: {
-                loaders: [{
+                rules: [{
                     test: /\.js$/,
                     exclude: /(node_modules|bower_components)/,
                     loaders: ['ng-annotate-loader', 'babel?cacheDirectory']

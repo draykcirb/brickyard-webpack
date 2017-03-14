@@ -12,7 +12,7 @@ function generate(config) {
             path: config.outputAssetsPath
         },
         module: {
-            loaders: [
+            rules: [
                 // **********************************
                 // special for jquery
                 // **********************************

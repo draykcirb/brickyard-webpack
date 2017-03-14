@@ -5,11 +5,16 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const butil = require('brickyard3/lib/util')
 const glob = require('glob')
-const webpackMerge = require('./lib/webpackMerge')
+const webpackMerge = require('webpack-merge')
 
 const commonPreset = require('./preset/common')
 
 let ExtractTextPlugin = null
+const smartMerge = webpackMerge.smartStrategy({
+    'module.rules.loaders': 'prepend',
+    'module.rules.use': 'prepend',
+    'module.loaders.loaders': 'prepend'
+})
 
 try {
     ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -35,17 +40,17 @@ module.exports = {
             this.configs.push(factory(runtime.config, commonWebpackConfig))
         })
 
-        let targetWebpackConfig = webpackMerge.smart(...this.configs)
+        let targetWebpackConfig = smartMerge(...this.configs)
 
         this.configs.length = 0
 
         this.configs.push(...this.retrievePluginConfig(runtime, targetWebpackConfig))
 
-        targetWebpackConfig = webpackMerge.smart(targetWebpackConfig, ...this.configs)
+        targetWebpackConfig = smartMerge(targetWebpackConfig, ...this.configs)
 
         targetWebpackConfig.plugins.push(
-          defineGlobalVars(runtime.config, targetWebpackConfig.debug),
-          ...createEntries(runtime.plugins)
+            defineGlobalVars(runtime.config, targetWebpackConfig.debug),
+            ...createEntries(runtime.plugins)
         )
 
         moveETP2End(targetWebpackConfig)
@@ -56,12 +61,12 @@ module.exports = {
         const pattern = butil.getFileGlobPattern('', _.map(runtime.plugins, 'raw.path'), 'webpack.config.js')
 
         return _.chain(glob.sync(pattern))
-          .map((_path) => {
-              const pluginConf = require(_path)
+            .map((_path) => {
+                const pluginConf = require(_path)
 
-              return _.isFunction(pluginConf) ? pluginConf(runtime.config, commonWebpackConfig) : pluginConf
-          })
-          .value()
+                return _.isFunction(pluginConf) ? pluginConf(runtime.config, commonWebpackConfig) : pluginConf
+            })
+            .value()
     }
 }
 
@@ -75,9 +80,9 @@ function moveETP2End(config) {
     const etps = config.plugins.filter(val => val instanceof ExtractTextPlugin)
 
     _.chain(config.plugins)
-      .pullAll(etps)
-      .push(...etps)
-      .value()
+        .pullAll(etps)
+        .push(...etps)
+        .value()
 }
 
 // ==========================================================
@@ -89,23 +94,23 @@ function moveETP2End(config) {
  */
 function createEntries(plugins) {
     return _.chain(plugins)
-      .map(function (plugin) {
-          let entry = _.get(plugin, 'raw.plugin.entry')
+        .map(function (plugin) {
+            let entry = _.get(plugin, 'raw.plugin.entry')
 
-          if (!Array.isArray(entry)) {
-              entry = [entry]
-          }
+            if (!Array.isArray(entry)) {
+                entry = [entry]
+            }
 
-          return entry.reduce(function (result, value) {
-              if (value) {
-                  result.push(createEntry(path.join(plugin.path, value)))
-              }
-              return result
-          }, [])
-      })
-      .flatten()
-      .compact()
-      .value()
+            return entry.reduce(function (result, value) {
+                if (value) {
+                    result.push(createEntry(path.join(plugin.path, value)))
+                }
+                return result
+            }, [])
+        })
+        .flatten()
+        .compact()
+        .value()
 }
 
 /**
