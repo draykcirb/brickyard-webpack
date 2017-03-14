@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/draykcirb/brickyard-webpack/compare/v1.3.2...v2.0.0) (2017-03-14)
+
+
+### Features
+
+* drop the old merge tool and in favor of webpack-merge ([84a40d1](https://github.com/draykcirb/brickyard-webpack/commit/84a40d1))
+* update to support webpack 2 ([58d6e60](https://github.com/draykcirb/brickyard-webpack/commit/58d6e60))
+
+
+### BREAKING CHANGES
+
+* Not compatible with old webpack 1
+
+
+
 <a name="1.3.2"></a>
 ## [1.3.2](https://github.com/draykcirb/brickyard-webpack/compare/v1.3.1...v1.3.2) (2016-10-14)
 
