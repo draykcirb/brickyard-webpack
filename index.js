@@ -49,7 +49,7 @@ module.exports = {
         targetWebpackConfig = smartMerge(targetWebpackConfig, ...this.configs)
 
         targetWebpackConfig.plugins.push(
-            defineGlobalVars(runtime.config, targetWebpackConfig.debug),
+            defineGlobalVars(runtime.config, process.env.NODE_ENV === 'DEVELOPMENT'),
             ...createEntries(runtime.plugins)
         )
 
@@ -62,7 +62,7 @@ module.exports = {
 
         return _.chain(glob.sync(pattern))
             .map((_path) => {
-                const pluginConf = require(_path)
+                const pluginConf = require(_path) // eslint-disable-line
 
                 return _.isFunction(pluginConf) ? pluginConf(runtime.config, commonWebpackConfig) : pluginConf
             })
